@@ -4,14 +4,14 @@ import { Picker } from "@react-native-picker/picker";
 import CalcTitle from "../components/calcTitle";
 
 export default function Calculator() {
-    const [number1, setNumber1] = useState("");
-    const [number2, setNumber2] = useState("");
+    const [num1, setNum1] = useState("");
+    const [num2, setNum2] = useState("");
     const [operation, setOperation] = useState("add");
     const [result, setResult] = useState<number | null>(null);
 
     const calculate = () => {
-        const a = parseFloat(number1);
-        const b = parseFloat(number2);
+        const a = parseFloat(num1);
+        const b = parseFloat(num2);
 
         if (isNaN(a) || isNaN(b)) {
             setResult(NaN);
@@ -37,94 +37,122 @@ export default function Calculator() {
     };
 
     return (
-        <View style={styles.container}>
+        <View style={styles.screen}>
             <CalcTitle />
 
-            <TextInput
-                style={styles.input}
-                keyboardType="numeric"
-                placeholder="Input the first number"
-                value={number1}
-                onChangeText={setNumber1}
-            />
+            <View style={styles.card}>
+                <TextInput
+                    style={styles.input}
+                    keyboardType="numeric"
+                    placeholder="First number"
+                    value={num1}
+                    onChangeText={setNum1}
+                />
 
-            <TextInput
-                style={styles.input}
-                keyboardType="numeric"
-                placeholder="Input the second number"
-                value={number2}
-                onChangeText={setNumber2}
-            />
+                <TextInput
+                    style={styles.input}
+                    keyboardType="numeric"
+                    placeholder="Second number"
+                    value={num2}
+                    onChangeText={setNum2}
+                />
 
-            <Picker
-                selectedValue={operation}
-                onValueChange={(value) => setOperation(value)}
-                style={styles.picker}
-            >
-                <Picker.Item label="add" value="add" />
-                <Picker.Item label="subtract" value="subtract" />
-                <Picker.Item label="multiply" value="multiply" />
-                <Picker.Item label="divide" value="divide" />
-            </Picker>
+                <View style={styles.pickerBox}>
+                    <Picker
+                        selectedValue={operation}
+                        onValueChange={(value) => setOperation(value)}
+                        style={styles.picker}
+                    >
+                        <Picker.Item label="Add" value="add" />
+                        <Picker.Item label="Subtract" value="subtract" />
+                        <Picker.Item label="Multiply" value="multiply" />
+                        <Picker.Item label="Divide" value="divide" />
+                    </Picker>
+                </View>
 
-            <TouchableOpacity style={styles.calcButton} onPress={calculate}>
-                <Text style={styles.calcButtonText}>Calculate</Text>
-            </TouchableOpacity>
-
+                <TouchableOpacity style={styles.button} onPress={calculate}>
+                    <Text style={styles.buttonText}>Calculate</Text>
+                </TouchableOpacity>
+            </View>
 
             {result !== null && (
-                <Text style={styles.result}>
-                    Result: {isNaN(result) ? "Invalid input" : result}
-                </Text>
+                <View style={styles.resultBox}>
+                    <Text style={styles.resultLabel}>Result</Text>
+                    <Text style={styles.resultValue}>
+                        {isNaN(result) ? "Invalid input" : result}
+                    </Text>
+                </View>
             )}
         </View>
     );
 }
 
 const styles = StyleSheet.create({
-    container: {
+    screen: {
         flex: 1,
-        justifyContent: "center",
-        padding: 20,
-        backgroundColor: "#ECE9F7",
-    },
-    calcButton: {
-        backgroundColor: "#76539e",
-        paddingVertical: 12,
-        paddingHorizontal: 24,
-        borderRadius: 12,
+        justifyContent: "flex-start",
         alignItems: "center",
-        marginTop: 10,
+        padding: 20,
+        backgroundColor: "#f7f6fb",
     },
-    calcButtonText: {
-        color: "#fff",
-        fontSize: 18,
-        fontWeight: "bold",
-    },
-
-    title: {
-        fontSize: 24,
-        fontWeight: "bold",
-        textAlign: "center",
-        marginBottom: 20,
-        color: "#76539e",
+    card: {
+        width: "100%",
+        padding: 20,
+        backgroundColor: "#fff",
+        borderRadius: 16,
+        shadowColor: "#000",
+        shadowOpacity: 0.1,
+        shadowOffset: { width: 0, height: 2 },
+        shadowRadius: 6,
+        elevation: 3,
+        marginTop: 20,
     },
     input: {
         borderWidth: 1,
-        borderColor: "#999",
-        borderRadius: 8,
-        padding: 10,
-        marginBottom: 10,
-        backgroundColor: "#fff",
+        borderColor: "#ccc",
+        borderRadius: 10,
+        padding: 12,
+        marginBottom: 12,
+        fontSize: 16,
+        backgroundColor: "#fdfdfd",
+    },
+    pickerBox: {
+        borderWidth: 1,
+        borderColor: "#76539e",
+        borderRadius: 10,
+        marginBottom: 20,
+        overflow: "hidden",
     },
     picker: {
-        marginBottom: 20,
+        height: 50,
+        width: "100%",
     },
-    result: {
-        marginTop: 20,
-        fontSize: 20,
+    button: {
+        backgroundColor: "#4b2c82",
+        paddingVertical: 14,
+        borderRadius: 12,
+        alignItems: "center",
+    },
+    buttonText: {
+        color: "#fff",
+        fontSize: 18,
+        fontWeight: "600",
+    },
+    resultBox: {
+        marginTop: 30,
+        backgroundColor: "#e7def5",
+        padding: 20,
+        borderRadius: 12,
+        alignItems: "center",
+    },
+    resultLabel: {
+        fontSize: 16,
+        color: "#4b2c82",
+        marginBottom: 6,
+    },
+    resultValue: {
+        fontSize: 22,
         fontWeight: "bold",
-        textAlign: "center",
-        color: "#2c3e50",
+        color: "#2c2c54",
     },
 });

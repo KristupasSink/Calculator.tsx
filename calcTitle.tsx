@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     marginTop: 40,
     marginBottom: 20,
-    marginLeft: 175,
+    marginLeft: 0,
   },
   description: {
     fontSize: 16,
